@@ -1,4 +1,4 @@
-# Competitive-programming-sereies
+# Competitive-programming-series
 In this sereies i will give all the useful information regarding competitive programming.
 The complete C++ code template for Competitive Coding. It includes all basic functions for mathematical operations, bitwise operations, prime number generation, basic geometry, fast input and output and much more. Go through this template and use it in your contests.
 
