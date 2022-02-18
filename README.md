@@ -12,7 +12,13 @@ I would like to tell you about some tricks and constructions I use in C++. They 
 
 The things below are filtered by my personal sense of non-popularity (so no __builtin functions) and usage frequency (so there almost surely are similar things I don't know about) and are not really sorted in any reasonable order. Let's begin.
 
-all(x)
+
+
+________________________________________*****************************************************_____________________________________________________________
+
+________________________________________________all(x)___________________________________________________
+
+
 This may be an exception to the rule of non-popularity -- this is quite widely used, but some next items will depend on all(x), so I define it here. So, I talk about
 
 #define all(x) (x).begin(), (x).end()
@@ -35,8 +41,11 @@ vector<Point> getConvexHull(vector<Point> pts) {
     // ...
 }
 Be, however, careful with this, because this reduces code readability significantly. Thanks to my teammates AndreySergunin and WHITE2302 for showing me this 1 + all(...) trick.
-
-std::unique
+ 
+___________________________________________________****************************************____________________________________________________________
+ 
+-----------------------------------------------------------std::unique--------------------------------------------------
+ 
 This is also well known, but not as well as I want, so I leave it here. std::unique(begin, end) goes from begin to end, removes consecutive duplicates and returns the end of the resulting iterator range. So, for example, if vec = {1, 1, 2, 2, 3, 2, 1}, then unique(all(vec)) makes it equal {1, 2, 3, 2, 1, ?, ?} (where ? is not known, but probably the last two symbols are 2 and 1) and returns vec.begin() + 5. Usually, to make a vector containing only its unique elements, one writes
 
 sort(all(vec));
