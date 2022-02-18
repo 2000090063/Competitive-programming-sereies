@@ -48,7 +48,10 @@ ___________________________________________________*****************************
  
 This is also well known, but not as well as I want, so I leave it here. std::unique(begin, end) goes from begin to end, removes consecutive duplicates and returns the end of the resulting iterator range. So, for example, if vec = {1, 1, 2, 2, 3, 2, 1}, then unique(all(vec)) makes it equal {1, 2, 3, 2, 1, ?, ?} (where ? is not known, but probably the last two symbols are 2 and 1) and returns vec.begin() + 5. Usually, to make a vector containing only its unique elements, one writes
 
-sort(all(vec));
+ 
+________________________________________*****************************************************_____________________________________________________________
+------------------------------------------------------sort(all(vec));
+ 
 vec.resize(unique(all(vec)) - vec.begin());
 or creates a function/define make_unique (which is, actually, also a name of some existing function in C++) which does so.
 
@@ -100,7 +103,12 @@ Also you may change the type to long long or even make the function template, bu
 
 Big thanks to my former teammates savinov and sokian for introducing this to me in their team template back in 2015 when I joined them. nxt() will return later in this blog.
 
-std::fill and std::iota
+ 
+ 
+________________________________________*****************************************************_____________________________________________________________
+ 
+--------------------------std::fill and std::iota
+ 
 Many of you know that if one wants to fill a piece of memory with a specific byte, they can use memset. It's quite fast and can be used to fill some (usually 1-dimensional) C-arrays by zeroes and minus ones. What if you want to fill a container by ones? The answer is as easy as pie:
 
 fill(all(vec), 1);
@@ -114,7 +122,10 @@ Dsu(int _n): n(_n), parent(_n), rank(_n) {
 }
 Here 0 denotes the value of *parent.begin(), and each next value is obtained from the previous one by the pre-increment.
 
-std::generate
+________________________________________*****************************************************_____________________________________________________________
+ 
+--------------------------------------std::generate
+ 
 If you have a 0-ary function (that is, with no arguments) and want to fill a range by its calls, instead of writing a for loop you can call std::generate: filling a vector vec by random values (assume it's rand() calls) may look like
 
 generate(all(vec), rand);
@@ -135,7 +146,11 @@ instead of a longer
 generate(vec.begin(), vec.begin() + n, nxt);
 Thanks to fdoer for telling this.
 
-std::rotate
+ 
+________________________________________*****************************************************_____________________________________________________________
+ 
+------------------------------------std::rotate
+ 
 Assume you write a profile dp. Or a 3-layer bfs. Or something else, where you need sometimes to cyclically shift a vector by k. If k=1 then one can write a loop of swaps:
 
 for (int i = 0; i < (int)vec.size() - 1; ++i) {
@@ -146,7 +161,12 @@ But if k>1 then the easiest way to do this manually is probably to create anothe
 rotate(vec.begin(), vec.begin() + k, vec.end());
 can do the trick. This function works in such a way that after rotate(begin, middle, end) the element *middle becomes the first from begin to end.
 
-std::merge
+ 
+________________________________________*****************************************************_____________________________________________________________
+ 
+ 
+-----------------------------------std::merge
+ 
 If you want to build a segment tree where each node contains a sorted list of values from the corresponding range then on its initialization you may need to merge two vectors several times (or if you implement your own merge sort). Some of you, probably, write some code like this:
 
 for (int v = n - 1; v > 0; --v) {
@@ -167,7 +187,12 @@ for (int v = n - 1; v > 0; --v) {
 }
 Basically, std::merge takes 5 arguments: begin and end of one interval to merge, begin and end of the second interval to merge, and where to write the result. Don't forget to allocate the required memory (the purpose of .resize() in the code above)!
 
-Create a set from a vector
+ 
+ 
+________________________________________*****************************************************_____________________________________________________________
+ 
+-----------------------------------------Create a set from a vector
+ 
 Not many of us know, but if you want to create a std::set from a vector and find out that set doesn't have a constructor of vector, you may go write a loop with an ok face, like:
 
 set<int> S;
@@ -194,7 +219,12 @@ The reason why it is called so and has an int type is that std::multiset and std
 
 Of course, if you need to do something with the element, if it is present in the set (for example, erase it), it may be useful to actually call .find() method in order to erase by iterator, not by element (thus kind of caching one tree descent).
 
-Check if an element occurs in a sorted sequence
+ 
+ 
+________________________________________*****************************************************_____________________________________________________________
+ 
+--------------------------------------Check if an element occurs in a sorted sequence
+ 
 Assume that you have, say, a sorted vector, and you want to check if it contains an element, but unlike the previous case, you don't care about the element itself. In this case you don't need to implement your own binary search like
 
 bool has(const vector<int>& vec, int key) {
@@ -231,8 +261,12 @@ for (int i = 0; i < n; ++i) {
     }
 }
 Afaik, a mnemonic rule to remember it (if needed) is "bang, bang, you're boolean".
+         
+         
+________________________________________*****************************************************_____________________________________________________________
+         
 
-Print a binary representation of a number
+---------------------------------------Print a binary representation of a number
 If you want to print, say, last 20 bits of a number, it's not necessary to write smth like
 
 void show_binary(int n) {
@@ -280,7 +314,11 @@ auto choose2 = [&](int n) -> long long {
 };
 Big thanks to my friends and colleagues Wild_Hamster, ArtDitel and fdoer again for showing me this construction (not only in this context, however).
 
-Introducing variables inside an if statement
+         
+         
+________________________________________*****************************************************_____________________________________________________________
+         
+---------------------------------------------Introducing variables inside an if statement
 Imagine the following: you have a function f(), which takes time to be computed, and if its value satisfies some condition, you want to somehow use it. You don't want to write
 
 if (is_good(f())) {
@@ -320,3 +358,9 @@ int x = min({a, b, c, d});
 Credits to the Jinotega twitter for this.
 
 I'm sure I forgot something. I also feel that this blog is like a quick start guide into stl. Still, I hope a lot of you will find something useful here. C++, as every other language (programming or natural), is evolving, after all, and we should keep our eyes on how we can use it efficiently.
+         
+         
+         
+         
+         
+         
